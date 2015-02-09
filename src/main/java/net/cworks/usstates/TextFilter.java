@@ -24,6 +24,13 @@ public class TextFilter implements Filter {
      */
     private FilterOp chain;
 
+    /**
+     * Create this TextFilter for the given field and presumably the FilterOp chain.  The FilterOp
+     * argument would imply this TextFilter is one of many Filters in an Chain of Filters, where
+     * each Filter will be 'applied' in order.
+     * @param field field/property to filter on
+     * @param chain FilterOp chain that this TextFilter will participate in
+     */
     TextFilter(String field, FilterOp chain) {
         this.field = field;
         this.chain = chain;

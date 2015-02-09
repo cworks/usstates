@@ -123,6 +123,15 @@ public class StatesTest {
     }
 
     @Test
+    public void testSelectTexas() {
+
+        List<State> results = States.selectBy().name().equal("Texas").list();
+        Assert.assertEquals(1, results.size());
+        Assert.assertEquals("Austin", results.get(0).getCapital());
+
+    }
+
+    @Test
     public void playingAround() {
         /*
         States.orderBy().admissionRank().desc().list();
