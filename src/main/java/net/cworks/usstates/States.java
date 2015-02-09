@@ -549,6 +549,7 @@ public class States {
 
         List<State> contextList = new LinkedList<State>(asList(new State[states.size()]));
         Collections.copy(contextList, states);
+        // SortOp is a chain
         SortOp sortOp = new SortOp(contextList);
 
         return sortOp;

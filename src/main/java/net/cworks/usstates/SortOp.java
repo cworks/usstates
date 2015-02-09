@@ -12,16 +12,10 @@ public class SortOp {
 
     private List<State> states;
 
-    private FilterOp filterOp;
-
     private List<Comparator> comparators = new ArrayList<Comparator>();
 
     SortOp(List<State> states) {
         this.states = states;
-    }
-
-    SortOp(FilterOp filterOp) {
-        this.filterOp = filterOp;
     }
 
     /**
@@ -286,9 +280,13 @@ public class SortOp {
         return Collections.unmodifiableList(states);
     }
 
+    /**
+     * Caller has been using filtering and now wants to do some sorting on the
+     * same context.
+     * @return
+     */
     public FilterOp filterBy() {
-
-        return null;
+        return new FilterOp(states);
     }
 
     private Comparator<State> getComparator() {

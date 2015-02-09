@@ -8,8 +8,6 @@ public class FilterOp {
 
     private List<State> states;
 
-    private SortOp sortOp;
-
     private List<Filter> filters = new ArrayList<Filter>();
 
     FilterOp(List<State> states) {
@@ -146,10 +144,13 @@ public class FilterOp {
         return states;
     }
 
+    /**
+     * Caller has been using filtering and now wants to do some sorting on the
+     * same context.  The SortOp will be using the same states list as this
+     * FilterOp so we pass it as an argument.
+     * @return
+     */
     public SortOp orderBy() {
-        if(sortOp == null) {
-            sortOp = new SortOp(this);
-        }
-        return sortOp;
+        return new SortOp(this.states);
     }
 }

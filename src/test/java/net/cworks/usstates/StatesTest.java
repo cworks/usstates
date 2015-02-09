@@ -124,10 +124,31 @@ public class StatesTest {
 
     @Test
     public void testSelectTexas() {
-
         List<State> results = States.selectBy().name().equal("Texas").list();
         Assert.assertEquals(1, results.size());
         Assert.assertEquals("Austin", results.get(0).getCapital());
+    }
+
+    @Test
+    public void testSelectNewMexicoTheLongWay() {
+        List<State> results = States.selectBy().name().beginsWith("N").name().equal("New Mexico").list();
+        Assert.assertEquals(1, results.size());
+        Assert.assertEquals("New Mexico", results.get(0).getName());
+    }
+
+    @Test
+    public void testSelectBeginsWithNew() {
+
+        List<State> results = States.selectBy().name()
+            .beginsWith("New")
+                .orderBy()
+                    .admissionRank(SortOrder.DESC)
+                        .list();
+        Assert.assertEquals(4, results.size());
+        Assert.assertEquals("New Mexico", results.get(0).getName());
+        Assert.assertEquals("New York", results.get(1).getName());
+        Assert.assertEquals("New Hampshire", results.get(2).getName());
+        Assert.assertEquals("New Jersey", results.get(3).getName());
 
     }
 

@@ -43,7 +43,20 @@ public class TextFilter implements Filter {
 
     public FilterOp equal(String value) {
 
-        return null;
+        this.filter = new Filter() {
+            @Override
+            public boolean apply(State state) {
+                Object result = invokeMethod(state);
+                if(result instanceof String) {
+                    String s = (String)result;
+                    return s.equals(value);
+                }
+
+                return false;
+            }
+        };
+
+        return chain;
     }
 
     public FilterOp notEqual(String value) {
@@ -61,16 +74,10 @@ public class TextFilter implements Filter {
         this.filter = new Filter() {
             @Override
             public boolean apply(State state) {
-                try {
-                    Method method = State.class.getMethod(
-                            "get" + Character.toUpperCase(field.charAt(0)) + field.substring(1));
-                    Object o = method.invoke(state);
-                    if(o instanceof String) {
-                        String s = (String)o;
-                        return s.startsWith(value);
-                    }
-                } catch (Exception ex) {
-                    return false;
+                Object result = invokeMethod(state);
+                if(result instanceof String) {
+                    String s = (String)result;
+                    return s.startsWith(value);
                 }
 
                 return false;
@@ -103,5 +110,17 @@ public class TextFilter implements Filter {
     public FilterOp notContains(String value) {
 
         return null;
+    }
+
+    private Object invokeMethod(final State state) {
+        Object result;
+        try {
+            Method method = State.class.getMethod(
+                "get" + Character.toUpperCase(field.charAt(0)) + field.substring(1));
+            result = method.invoke(state);
+        } catch(Exception ex) {
+            return null;
+        }
+        return result;
     }
 }
