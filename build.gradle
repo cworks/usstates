@@ -1,0 +1,25 @@
+description 'Gizmo Generated Project on Mon Feb 09 09:00:54 CST 2015'
+
+apply plugin: "java"
+apply plugin: "maven"
+apply plugin: "idea"
+
+configurations {
+    providedRuntime
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url "http://dl.bintray.com/cworks/maven"
+    }
+}
+
+dependencies {
+    testCompile("junit:junit:4.11")
+}
+
+task wrapper(type: Wrapper, description: 'Generates the gradle wrapper.') {
+    gradleVersion = '2.2.1'
+}
